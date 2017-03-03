@@ -29,44 +29,53 @@ class Person(metaclass=ABCMeta):
     @abstractmethod
     def Accept(self, visitor): return
     
+    @abstractmethod
+    def GetType(self): return
+        
     
 class Success(Action):
     # 成功
     def GetManConclusion(self, concreteElementA):
         print('{0} {1}时，背后多半有一个伟大的女人。'\
-              .format(concreteElementA.GetType().Name, self.GetType().Name)
+              .format(concreteElementA.GetType(), self.GetType())
               )
         
     def GetWomanConclusion(self, concreteElementB):
         print('{0} {1}时，背后多半有一个不成功的男人。'\
-              .format(concreteElementB.GetType().Name, self.GetType().Name)
+              .format(concreteElementB.GetType(), self.GetType())
               )
+        
+    def GetType(self): return '成功'
     
     
 class Failing(Action):
     # 失败
     def GetManConclusion(self, concreteElementA):
         print('{0} {1}时，闷头喝酒，谁也劝不动。'\
-              .format(concreteElementA.GetType().Name, self.GetType().Name)
+              .format(concreteElementA.GetType(), self.GetType())
               )
         
     def GetWomanConclusion(self, concreteElementB):
         print('{0} {1}时，眼泪汪汪，谁也劝不了。'\
-              .format(concreteElementB.GetType().Name, self.GetType().Name)
+              .format(concreteElementB.GetType(), self.GetType())
               )
+        
+    def GetType(self): return '失败'
 
 
 class Amativeness(Action):
     # 恋爱
     def GetManConclusion(self, concreteElementA):
         print('{0} {1}时，凡是不懂也要装懂。'\
-              .format(concreteElementA.GetType().Name, self.GetType().Name)
+              .format(concreteElementA.GetType(), self.GetType())
               )
         
     def GetWomanConclusion(self, concreteElementB):
         print('{0} {1}时，遇事懂也装作不懂。'\
-              .format(concreteElementB.GetType().Name, self.GetType().Name)
+              .format(concreteElementB.GetType(), self.GetType())
               )
+        
+    def GetType(self): return '恋爱'
 
 
 class Man(Person):
@@ -74,11 +83,16 @@ class Man(Person):
     def Accept(self, visitor):
         visitor.GetManConclusion(self)
         
+    def GetType(self): return '男人'
+        
+        
 
 class Woman(Person):
     # 女人
     def Accept(self, visitor):
         visitor.GetWomanConclusion(self)
+        
+    def GetType(self): return '女人'
         
         
 class ObjectStructure(object):
@@ -101,16 +115,18 @@ class ObjectStructure(object):
 
 # Added
 class Marriage(Action):
-    # 恋爱
+    # 结婚
     def GetManConclusion(self, concreteElementA):
-        print('{0} {1}时，感慨道：恋爱游戏终结时，‘有妻徒刑’遥无期。'\
-              .format(concreteElementA.GetType().Name, self.GetType().Name)
+        print('{0} {1}时，感慨道：恋爱游戏终结时，“有妻徒刑”遥无期。'\
+              .format(concreteElementA.GetType(), self.GetType())
               )
         
     def GetWomanConclusion(self, concreteElementB):
         print('{0} {1}时，欣慰曰：爱情长跑路漫漫，婚姻保险保平安。'\
-              .format(concreteElementB.GetType().Name, self.GetType().Name)
+              .format(concreteElementB.GetType(), self.GetType())
               )
+        
+    def GetType(self): return '结婚'
 
 if __name__ == '__main__':
     o = ObjectStructure()
@@ -130,3 +146,4 @@ if __name__ == '__main__':
     # Add
     v4 = Marriage()
     o.Display(v4)
+    
